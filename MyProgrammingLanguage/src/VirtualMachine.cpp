@@ -41,9 +41,8 @@ void VirtualMachine::Read()
 	for (int i = 0; i < lines.size(); i++) {
 		string line = lines[i];
 		string command;
-		vector<StorageIndex> args;
-		vector<string> strargs;
-		int returnIndex = -1;
+		vector<string> args;
+		string returnIndex;
 
 		bool inParams = false;
 		bool inReturn = false;
@@ -55,13 +54,11 @@ void VirtualMachine::Read()
 
 			if (inReturn) {
 				if (isdigit(character))
-					returnIndex = ToDigit(character);
+					returnIndex += character;
 			}
 			else if (inParams) {
 				if (character != ')' && character != ',' && character != '[') {
-					if (isdigit(character))
-						args.push_back(ToDigit(character));
-					else if (inArgString)
+					if (inArgString)
 					{
 						argStr += character;
 					}
@@ -73,7 +70,7 @@ void VirtualMachine::Read()
 				}
 				else if ((character == ',' && inArgString) || character == ')' && inArgString)
 				{
-					strargs.push_back(argStr);
+					args.push_back(argStr);
 					inArgString = false;
 				}
 				else if (character == '[')
@@ -88,12 +85,12 @@ void VirtualMachine::Read()
 
 		if (command != "") {
 			// Execute
-			(this->*(VMCommands[command]).func)(args, strargs, returnIndex);
+			(this->*(VMCommands[command]).func)(args, atoi(returnIndex.c_str()));
 		}
 	}
 }
 
-int VirtualMachine::ToDigit(char c)
+/*int VirtualMachine::ToDigit(char c)
 {
 	switch (c) {
 	case '0':
@@ -119,15 +116,15 @@ int VirtualMachine::ToDigit(char c)
 	default:
 		return -1;
 	}
-}
+}*/
 
 /*
 COMMANDS START
 */
 // nstore(data)[@]
-void VirtualMachine::nstore(vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex)
+void VirtualMachine::nstore(vector<string> args, StorageIndex returnIndex)
 {
-	int data = args[0];
+	int data = atoi(args[0].c_str());
 	int dataIndex = numberStorage.size();
 	// make entry in storage
 	storage.push_back(StorageEntry{
@@ -139,9 +136,9 @@ void VirtualMachine::nstore(vector<StorageIndex> args, vector<string> strargs, S
 	numberStorage.push_back(data);
 }
 
-void VirtualMachine::sstore(vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex)
+void VirtualMachine::sstore(vector<string> args, StorageIndex returnIndex)
 {
-	string data = strargs[0];
+	string data = args[0];
 	int dataIndex = stringStorage.size();
 	// make entry in storage
 	storage.push_back(StorageEntry{
@@ -153,10 +150,10 @@ void VirtualMachine::sstore(vector<StorageIndex> args, vector<string> strargs, S
 	stringStorage.push_back(data);
 }
 
-void VirtualMachine::add(vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex)
+void VirtualMachine::add(vector<string> args, StorageIndex returnIndex)
 {
-	int index1 = args[0];
-	int index2 = args[1];
+	int index1 = atoi(args[0].c_str());
+	int index2 = atoi(args[1].c_str());
 	int A = numberStorage[storage[index1].dataIndex];
 	int B = numberStorage[storage[index2].dataIndex];
 
@@ -173,9 +170,9 @@ void VirtualMachine::add(vector<StorageIndex> args, vector<string> strargs, Stor
 	numberStorage.push_back(result);
 }
 
-void VirtualMachine::print(vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex)
+void VirtualMachine::print(vector<string> args, StorageIndex returnIndex)
 {
-	StorageEntry entry = storage[args[0]];
+	StorageEntry entry = storage[atoi(args[0].c_str())];
 	
 	if (entry.datatype == "number") {
 		int data = numberStorage[entry.dataIndex];

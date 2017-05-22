@@ -23,7 +23,7 @@ interpreter:
 
 int main()
 {
-	ofstream file("output.mplc");
+	ofstream file("test.mplc");
 
 	CodeGenerator cg("./test.mpl");
 	cg.Generate();
@@ -31,7 +31,7 @@ int main()
 	file << cg.buffer.str() << endl;
 	file.close();
 
-	VirtualMachine vm("output.mplc");
+	VirtualMachine vm("test.mplc");
 
 	cin.get();
 	return 0;

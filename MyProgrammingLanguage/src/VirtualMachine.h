@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <map>
+#include <cstdlib>
 
 using namespace std;
 using StorageIndex = int;
@@ -15,7 +16,7 @@ class VirtualMachine;
 struct VMCommandStruct
 {
 	string id;
-	void(VirtualMachine::*func) (vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex);
+	void(VirtualMachine::*func) (vector<string> args, StorageIndex returnIndex);
 };
 
 using VMCommand = pair<string, VMCommandStruct>;
@@ -48,15 +49,12 @@ public:
 	// Read file
 	void Read();
 
-	// Convert char to int('1' -> 1)
-	int ToDigit(char c);
-
 	// *** COMMANDS START ***
 
-	void nstore(vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex);
-	void sstore(vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex);
-	void add(vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex);
-	void print(vector<StorageIndex> args, vector<string> strargs, StorageIndex returnIndex);
+	void nstore(vector<string> args, StorageIndex returnIndex);
+	void sstore(vector<string> args, StorageIndex returnIndex);
+	void add(vector<string> args, StorageIndex returnIndex);
+	void print(vector<string> args, StorageIndex returnIndex);
 
 	// *** COMMANDS END ***
 	~VirtualMachine();

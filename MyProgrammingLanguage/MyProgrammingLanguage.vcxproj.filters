@@ -87,6 +87,6 @@
     <None Include="test.mpl">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="output.mplc" />
+    <None Include="test.mplc" />
   </ItemGroup>
 </Project>
