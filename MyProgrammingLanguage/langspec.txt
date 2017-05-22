@@ -1,0 +1,5 @@
+In EBNF
+
+program = block, EOF
+block = {block | statement}
+statement =
