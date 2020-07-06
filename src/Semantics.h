@@ -6,7 +6,9 @@
 
 class SemanticError : public exception
 {
-	const char* what() const noexcept {}
+	const char *what() const noexcept {
+		return "";
+	};
 };
 
 class Semantics : public SymbolTable

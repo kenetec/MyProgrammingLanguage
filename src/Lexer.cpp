@@ -149,7 +149,7 @@ Token Lexer::Get()
 
 		while (c1 != startingQuote)
 		{
-			if (c1.c_str() == ENDMARK)
+			if (c1.c_str() == (const char *) ENDMARK)
 				Abort(token, "Found end of file before end of string literal");
 
 			token.AddToPayload(c1);
@@ -200,7 +200,7 @@ void Lexer::GetChar()
 	c2 = c1 + scanner.Peek();
 }
 
-bool Lexer::StrInVec(vector<string>& vec, string& value)
+bool Lexer::StrInVec(vector<string>& vec, const string& value)
 {
 	return (find(vec.begin(), vec.end(), value) != vec.end());
 }

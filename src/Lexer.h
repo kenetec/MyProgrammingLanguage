@@ -11,8 +11,9 @@ using namespace std;
 
 // Lexer Error
 class LexerError : public exception {
-	const char* what() const noexcept
-	{}
+	const char *what() const noexcept {
+		return "";
+	};
 };
 
 class Lexer
@@ -27,7 +28,7 @@ public:
 	Token Get();
 	void GetChar();
 	void Abort(Token token, string msg);
-	bool StrInVec(vector<string>& vec, string& value);
+	bool StrInVec(vector<string>& vec, const string& value);
 
 	~Lexer() {};
 

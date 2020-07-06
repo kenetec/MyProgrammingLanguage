@@ -39,6 +39,8 @@ ReferenceEntry CodeGenerator::GetFromReference(Symbol*& sym)
 		if (entry.sym == sym)
 			return entry;
 	}
+
+	return ReferenceEntry();
 }
 
 /*

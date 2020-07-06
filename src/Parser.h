@@ -6,10 +6,10 @@
 
 class ParserException : public exception
 {
-	const char* what() const noexcept
-	{}
+	const char *what() const noexcept {
+		return "";
+	};
 };
-
 
 /*
 Uses recursive-decent parsing.

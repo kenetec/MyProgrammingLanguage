@@ -22,7 +22,7 @@ interpreter:
 */
 
 int main()
-{
+{	
 	ofstream file("test.mplc");
 
 	CodeGenerator cg("./test.mpl");
@@ -32,7 +32,7 @@ int main()
 	file.close();
 
 	VirtualMachine vm("test.mplc");
+	vm.Read();
 
-	cin.get();
 	return 0;
 }
